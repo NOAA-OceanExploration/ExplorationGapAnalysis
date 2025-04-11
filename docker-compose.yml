@@ -62,13 +62,7 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
-    deploy:
-      resources:
-        #limits:
-          # cpus: "4.0"  # Limit CPU usage to 4 cores
-        reservations:
-        #  cpus: "4.0"  # Reserve 4 CPUs to ensure availability
-
+      
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container
@@ -132,12 +126,6 @@ services:
     <<: *airflow-common
     command: celery worker
     scale: 1
-    deploy:
-      resources:
-        #limits:
-          #cpus: "4.0"  # Allocate 4 CPUs for the single worker
-        reservations:
-          cpus: "2.0"  # Reserve 2 CPUs for the worker to ensure it has sufficient resources
     healthcheck:
       test:
         - "CMD-SHELL"
@@ -264,8 +252,6 @@ services:
     volumes:
       - ./spark:/opt/spark  # Adjust based on your needs
       - ./bucket:/mnt/bucket  # Mount the shared volume in the worker container
-    networks:
-      - airflow_network
     restart: always
 
   # Spark Worker 1
@@ -277,8 +263,6 @@ services:
       - SPARK_MASTER=spark://spark-master:7077
     depends_on:
       - spark-master
-    networks:
-      - airflow_network
     volumes:
       - ./bucket:/mnt/bucket  # Mount the shared volume in the worker container
     restart: always
@@ -292,8 +276,6 @@ services:
       - SPARK_MASTER=spark://spark-master:7077
     depends_on:
       - spark-master
-    networks:
-      - airflow_network
     volumes:
       - ./bucket:/mnt/bucket  # Mount the shared volume in the worker container
     restart: always
