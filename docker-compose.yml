@@ -250,6 +250,54 @@ services:
       - -c
       - airflow
 
+    # Spark master service
+  spark-master:
+    image: bitnami/spark:latest
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+      - SPARK_UI_PORT=8090
+    ports:
+      - "8090:8090"  # Expose Spark UI
+    volumes:
+      - ./spark:/opt/spark  # Adjust based on your needs
+      - ./bucket:/mnt/bucket  # Mount the shared volume in the worker container
+    networks:
+      - airflow_network
+    restart: always
+
+  # Spark Worker 1
+  spark-worker-1:
+    image: bitnami/spark:latest
+    container_name: spark-worker-1
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    networks:
+      - airflow_network
+    volumes:
+      - ./bucket:/mnt/bucket  # Mount the shared volume in the worker container
+    restart: always
+
+  # Spark Worker 2
+  spark-worker-2:
+    image: bitnami/spark:latest
+    container_name: spark-worker-2
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    networks:
+      - airflow_network
+    volumes:
+      - ./bucket:/mnt/bucket  # Mount the shared volume in the worker container
+    restart: always
+
   flower:
     <<: *airflow-common
     command: celery flower
