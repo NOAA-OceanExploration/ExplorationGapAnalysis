@@ -62,6 +62,13 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
+    deploy:
+      resources:
+        #limits:
+          # cpus: "4.0"  # Limit CPU usage to 4 cores
+        reservations:
+          cpus: "4.0"  # Reserve 4 CPUs to ensure availability
+
       
   pgadmin:
     image: dpage/pgadmin4
@@ -119,6 +126,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
+
   airflow-worker:
     build:
       context: .
@@ -148,6 +156,13 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    deploy:
+      resources:
+        #limits:
+          #cpus: "4.0"  # Allocate 4 CPUs for the single worker
+        reservations:
+          cpus: "2.0"  # Reserve 2 CPUs for the worker to ensure it has sufficient resources
+
 
   airflow-triggerer:
     <<: *airflow-common
