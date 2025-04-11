@@ -67,7 +67,7 @@ services:
         #limits:
           # cpus: "4.0"  # Limit CPU usage to 4 cores
         reservations:
-          cpus: "4.0"  # Reserve 4 CPUs to ensure availability
+        #  cpus: "4.0"  # Reserve 4 CPUs to ensure availability
 
   pgadmin:
     image: dpage/pgadmin4
