@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 USER airflow
-RUN  pip install xarray netcdf4 certifi futures geopandas h3 pygbif shapely antimeridian wget
+RUN  pip install xarray netcdf4 certifi futures geopandas h3 pygbif shapely antimeridian wget pyspark
