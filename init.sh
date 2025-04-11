@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # init script for airflow setup
-mkdir -p ./dags ./logs ./plugins ./config ./database ./bucket # only needed if you didn't clone the dirs
+mkdir -p ./dags ./logs ./plugins ./config ./database ./bucket ./sparkapps # only needed if you didn't clone the dirs
 sudo usermod -aG docker $USER
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 

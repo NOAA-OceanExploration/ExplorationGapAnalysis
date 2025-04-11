@@ -126,7 +126,6 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
-
   airflow-worker:
     build:
       context: .
@@ -162,7 +161,6 @@ services:
           #cpus: "4.0"  # Allocate 4 CPUs for the single worker
         reservations:
           cpus: "2.0"  # Reserve 2 CPUs for the worker to ensure it has sufficient resources
-
 
   airflow-triggerer:
     <<: *airflow-common
@@ -256,7 +254,7 @@ services:
     # Spark master service
   spark-master:
     image: bitnami/spark:latest
-    container_name: spark-master
+    container_name: oer-ega-spark-master
     environment:
       - SPARK_MODE=master
       - SPARK_MASTER_HOST=spark-master
@@ -272,7 +270,7 @@ services:
   # Spark Worker 1
   spark-worker-1:
     image: bitnami/spark:latest
-    container_name: spark-worker-1
+    container_name: oer-ega-spark-worker-1
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER=spark://spark-master:7077
@@ -285,7 +283,7 @@ services:
   # Spark Worker 2
   spark-worker-2:
     image: bitnami/spark:latest
-    container_name: spark-worker-2
+    container_name: oer-ega-spark-worker-2
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER=spark://spark-master:7077
