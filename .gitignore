@@ -8,3 +8,7 @@ __pycache__/*
 *.csv
 .vscode
 ./app
+outputs/*.geojson
+parquor/
+init.sh
+docker_boot.service

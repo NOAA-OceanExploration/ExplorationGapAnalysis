@@ -175,6 +175,8 @@ points_to_hex_table= PostgresOperator(
             point,
             h3_lat_lng_to_cell(point, 5) AS hex_05
         FROM points;
+
+        ALTER TABLE wcsd_footprints ADD FOREIGN KEY (wcsdid) REFERENCES wcsd_lines (wcsdid);
         """,
     dag=dag
 )

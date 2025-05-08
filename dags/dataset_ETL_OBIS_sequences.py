@@ -9,6 +9,7 @@ import sys
 from pyobis import occurrences as occ
 from airflow import DAG
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 
@@ -459,6 +460,27 @@ assign_hexes_to_OBIS = PythonOperator(
     task_id='assign_hexes_to_OBIS',
     python_callable=assign_OBIS_hex,
     provide_context=True,
+    dag=dag
+)
+
+cleanup_nonocean_hexes = PostgresOperator(
+    task_id='cleanup_nonocean_hexes',
+    postgres_conn_id='oceexp-db',
+    sql="""
+    DELETE FROM obis_sequences t2
+    WHERE NOT EXISTS (
+        SELECT 1 FROM h3_oceans t1 WHERE t1.hex_05 = t2.hex_05
+    );
+    """,
+    dag=dag
+)
+
+assign_fks = PostgresOperator(
+    task_id='assign_fks',
+    postgres_conn_id='oceexp-db',
+    sql="""
+    ALTER TABLE obis_sequences ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
+    """,
     dag=dag
 )
 

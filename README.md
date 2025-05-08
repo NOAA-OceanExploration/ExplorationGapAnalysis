@@ -56,8 +56,13 @@ More types are in development and will be added in future releases.
 
 ### Outputs
 
-- **Hexagon GeoJSON**: Full-resolution hex polygons with scores per observation type
-- **Centroid GeoJSON**: Lighter-weight points for each hexagon with the same properties
+Output files from the full processing pipeline at hexagon resolution 5 (~11 km width) can be up to ~1.5 GB - compressed GeoParquet files are offered here in the outputs folder for levels 4 and 3, but need to be extracted to their original GeoJSON format prior to use. In order to save space, the compression utility rounds off coordinate precision to 5 decimal places (~1m). We're working on a solution to host the level 5 results here in GitHub or another platform. 
+
+- **GeoParquet Files**: See utilities folder for Python scripts to extract compressed files containing the following:
+  - **Hexagon GeoJSON**: Full-resolution hex polygons with scores per observation type
+  - **Point GeoJSON**: Lighter-weight centroid points file for each hexagon with the same properties
+
+[View PostGIS Database Entity Relationship Diagram](https://lucid.app/documents/embedded/74e51c42-7f40-4167-b0da-a49decd8267c)
 
 ---
 

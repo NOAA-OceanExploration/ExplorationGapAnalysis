@@ -62,5 +62,6 @@ with DAG(
         wait_for_completion=True,
         reset_dag_run=True,
     )
+
     # Set execution order: GLODAP -> GEBCO -> OSM
-    trigger_glodap >> trigger_gebco >> trigger_gbif >> trigger_imlgs >> trigger_wcsd
+    trigger_glodap >> trigger_gebco >> trigger_gbif >> trigger_imlgs >> trigger_obis >> trigger_wcsd

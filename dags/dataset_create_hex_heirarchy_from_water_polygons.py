@@ -157,7 +157,7 @@ create_h3_primary = PostgresOperator(
         ALTER TABLE h3_oceans
         ADD PRIMARY KEY (hex_05);
 
-
+        DROP TABLE IF EXISTS hex_ocean_polys_05; 
     """,
 )
 
