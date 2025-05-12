@@ -15,7 +15,7 @@ default_args = {
 
 # Define the DAG
 dag = DAG(
-    'cleanup_and_fk',
+    'processing_cleanup_and_fk',
     default_args=default_args,
     description='Clean up non-ocean observations that slipped through filter, assign foreign keys',
     schedule_interval=None,  # Trigger manually or modify as needed
@@ -56,7 +56,8 @@ cleanup_nonocean_hexes = PostgresOperator(
     WHERE NOT EXISTS (
         SELECT 1 FROM h3_oceans t1 WHERE t1.hex_05 = t2.hex_05
     );
-    """
+    """,
+    dag=dag
 )
 
 assign_fks = PostgresOperator(
@@ -76,7 +77,8 @@ assign_fks = PostgresOperator(
     ALTER TABLE ega_score_05 ADD FOREIGN KEY (hex_05) REFERENCES h3_oceans (hex_05);
     ALTER TABLE h3_oceans ADD FOREIGN KEY (hex_04) REFERENCES ega_score_04 (hex_04);
     ALTER TABLE h3_oceans ADD FOREIGN KEY (hex_03) REFERENCES ega_score_03 (hex_03);
-    """
+    """,
+    dag=dag
 )
 
 # Define task dependencies

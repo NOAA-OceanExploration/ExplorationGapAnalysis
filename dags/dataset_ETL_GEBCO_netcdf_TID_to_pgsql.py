@@ -140,14 +140,14 @@ def assign_gebcoTID_hex():
                 SELECT hex_05, val, polygon_id
                 FROM gebco_2024_polygons,
                 LATERAL h3_polygon_to_cells(polygon, 5) AS hex_05
-                WHERE val IN (10, 11, 12, 13, 14, 15, 16, 17);
+                WHERE val IN (10, 11, 12, 13, 14, 15, 16, 17)
                     AND hex_05 IN (SELECT hex_05 FROM h3_oceans);
 
                 INSERT INTO gebco_tid_hex (hex_05, val, polygon_id)
                 SELECT hex_05, val, polygon_id
                 FROM gebco_2024_polygons,
                 LATERAL h3_polygon_to_cells(polygon, 5) AS hex_05
-                WHERE val NOT IN (10, 11, 12, 13, 14, 15, 16, 17);
+                WHERE val NOT IN (10, 11, 12, 13, 14, 15, 16, 17)
                     AND hex_05 IN (SELECT hex_05 FROM h3_oceans);
             ELSE
                 -- If h3_oceans does not exist, insert without the condition
