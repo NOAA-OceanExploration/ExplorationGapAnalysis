@@ -66,7 +66,7 @@ Output files from the full processing pipeline at hexagon resolution 5 (~11 km w
   - **csv**: Simple csv flat file with no geospatial data, only hexagon indices
   - **sql**: SQL dump of the entire database after assembly, cleaning, and processing
 
-[Zenodo Dataset: DOI 10.5281/zenodo.15490756 ](https://doi.org/10.5281/zenodo.15490756)
+[Zenodo Dataset: DOI 10.5281/zenodo.15490755 ](https://doi.org/10.5281/zenodo.15490755)
 
 [View PostGIS Database Entity Relationship Diagram](https://lucid.app/documents/embedded/74e51c42-7f40-4167-b0da-a49decd8267c)
 

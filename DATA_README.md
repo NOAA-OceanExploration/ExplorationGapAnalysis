@@ -4,9 +4,9 @@
     Authors: Thomas Morrow
     Affiliations: NOAA Ocean Exploration  
     Contact: thomas.morrow@noaa.gov
-    DOI: [DOI link from Zenodo]  
+    DOI: 10.5281/zenodo.15490755
     Version: v0.2.0  
-    Date Published: YYYY-MM-DD
+    Date Published: 2025-05-23
     Repository: github.com/NOAA-OceanExploration/ExplorationGapAnalysis/
 
 ---
