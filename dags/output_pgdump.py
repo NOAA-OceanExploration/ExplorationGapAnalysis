@@ -31,7 +31,8 @@ def run_pg_dumpall(**kwargs):
     ]
 
     # Optionally save the output somewhere
-    with open("/mnt/s3bucket/oceexp_db_dump.sql", "w") as f:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    with open(f"/mnt/s3bucket/oceexp_db_dump_{timestamp}.sql", "w") as f:
         result = subprocess.run(dump_cmd, env=env, stdout=f, stderr=subprocess.PIPE, text=True)
 
     if result.returncode != 0:

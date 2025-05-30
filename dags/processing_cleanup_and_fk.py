@@ -64,19 +64,41 @@ assign_fks = PostgresOperator(
     task_id='assign_fks',
     postgres_conn_id='oceexp-db',
     sql="""
-    ALTER TABLE gbif_occurrences ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
-    ALTER TABLE obis_sequences ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
-    ALTER TABLE wcsd_footprints ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
-    ALTER TABLE imlgs ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
-    ALTER TABLE glodap ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
-    ALTER TABLE gebco_tid_hex ADD FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
+        ALTER TABLE gbif_occurrences 
+            ADD CONSTRAINT fk_gbif_occurrences_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
 
-    ALTER TABLE gebco_tid_hex ADD FOREIGN KEY (polygon_id) REFERENCES gebco_2024_polygons (polygon_id);
-    ALTER TABLE gebco_2024_polygons ADD FOREIGN KEY (rid) REFERENCES gebco_2024 (rid);
+        ALTER TABLE obis_sequences 
+            ADD CONSTRAINT fk_obis_sequences_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
 
-    ALTER TABLE ega_score_05 ADD FOREIGN KEY (hex_05) REFERENCES h3_oceans (hex_05);
-    ALTER TABLE h3_oceans ADD FOREIGN KEY (hex_04) REFERENCES ega_score_04 (hex_04);
-    ALTER TABLE h3_oceans ADD FOREIGN KEY (hex_03) REFERENCES ega_score_03 (hex_03);
+        ALTER TABLE wcsd_footprints 
+            ADD CONSTRAINT fk_wcsd_footprints_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
+
+        ALTER TABLE imlgs 
+            ADD CONSTRAINT fk_imlgs_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
+
+        ALTER TABLE glodap 
+            ADD CONSTRAINT fk_glodap_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
+
+        ALTER TABLE gebco_tid_hex 
+            ADD CONSTRAINT fk_gebco_tid_hex_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES ega_score_05 (hex_05);
+
+        ALTER TABLE gebco_tid_hex 
+            ADD CONSTRAINT fk_gebco_tid_hex_polygon_id 
+            FOREIGN KEY (polygon_id) REFERENCES gebco_2024_polygons (polygon_id);
+
+        ALTER TABLE gebco_2024_polygons 
+            ADD CONSTRAINT fk_gebco_2024_polygons_rid 
+            FOREIGN KEY (rid) REFERENCES gebco_2024 (rid);
+
+        ALTER TABLE ega_score_05 
+            ADD CONSTRAINT fk_ega_score_05_hex_05 
+            FOREIGN KEY (hex_05) REFERENCES h3_oceans (hex_05);
     """,
     dag=dag
 )
